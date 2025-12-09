@@ -8,8 +8,8 @@ if "%~1"=="" (
 
 REM Check if target file exists
 set "TARGET=%~1"
-if not exist "%TARGET%.cpp" (
-    echo Error: File "%TARGET%.cpp" not found.
+if not exist "src/%TARGET%.cpp" (
+    echo Error: File "src/%TARGET%.cpp" not found.
     exit /b 1
 )
 
