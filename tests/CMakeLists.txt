@@ -1,4 +1,4 @@
-file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "*.cpp")
+file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "*_test.cpp")
 
 foreach(testfile ${TEST_SOURCES})
     get_filename_component(testname ${testfile} NAME_WE)
