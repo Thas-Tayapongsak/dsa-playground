@@ -1,6 +1,11 @@
 @echo off
 setlocal 
 
+set "TEST_FLAG="
+if /I "%~1"=="-t" set TEST_FLAG=1
+if /I "%~1"=="--test" set TEST_FLAG=1
+if defined TEST_FLAG goto :build_target_test
+
 if not "%~2"=="" (
     echo Error: Too many arguments or mixed flags.
     goto :help
@@ -43,8 +48,20 @@ goto :build_target
     goto :check_error
 
 :build_target
+    set "TARGET=%~1"
     if not exist "apps/%TARGET%.cpp" (
         echo Error: File "apps/%TARGET%.cpp" not found.
+        exit /b 1
+    )
+    echo Building: %TARGET%...
+    echo ---------------------------------------------------
+    cmake --build --preset debug --target "%TARGET%"
+    goto :check_error
+
+:build_target_test
+    set "TARGET=%~2"
+    if not exist "tests/%TARGET%.cpp" (
+        echo Error: File "tests/%TARGET%.cpp" not found.
         exit /b 1
     )
     echo Building: %TARGET%...

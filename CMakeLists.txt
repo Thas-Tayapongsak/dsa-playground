@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.12)
 
 project(Scratchpad)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Output Directories
 # Executables (.exe) go to build/bin
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -47,15 +49,4 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-file(GLOB TEST_SOURCES CONFIGURE_DEPENDS "tests/*.cpp")
-
-foreach(testfile ${TEST_SOURCES})
-    get_filename_component(testname ${testfile} NAME_WE)
-    add_executable(${testname} ${testfile})
-    target_link_libraries(
-        ${testname} PRIVATE my_libs
-        GTest::gtest_main
-    )
-    include(GoogleTest)
-    gtest_discover_tests(${testname})
-endforeach()
+add_subdirectory(tests)
