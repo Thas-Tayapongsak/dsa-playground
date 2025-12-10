@@ -1,6 +1,9 @@
 # dsa-playground
 
-เขียนเล่นตามหนังสือ
+1. เขียนเล่นตามหนังสือ
+2. เรียนรู้ C++
+3. ฝึกเขียน test
+
 
 **Setup**
 ```bash
@@ -18,4 +21,11 @@ cmake --preset default
 ```bash
 ./run <filename> [args...]
 ./run HelloWorld "Thas"
+```
+
+**Test**
+```bash
+./test <testregex>
+./test [--all|-a]
+./test [--list|-l] <testregex>
 ```
