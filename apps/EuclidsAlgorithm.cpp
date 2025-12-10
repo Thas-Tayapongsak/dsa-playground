@@ -1,5 +1,5 @@
 #include <iostream>
-#include "my_dsa/euclid_gcd.h"
+#include "my_dsa/euclids_algorithm.h"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
     int num1 = stoi(argv[1]);
     int num2 = stoi(argv[2]);
     
-    int result = my_dsa::euclid_gcd(num1, num2);
+    int result = my_dsa::euclids_algorithm(num1, num2);
     
     cout << "The greated common divisor of " << num1 << " and " << num2 << " is " << result << endl;
 }
