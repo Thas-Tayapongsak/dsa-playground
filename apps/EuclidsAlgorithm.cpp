@@ -1,5 +1,5 @@
 #include <iostream>
-#include "my_dsa/euclids_algorithm.h"
+#include "my_dsa.h"
 
 int main(int argc, char* argv[]) {
     // Validate arguments

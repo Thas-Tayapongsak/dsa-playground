@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 namespace my_dsa {
     /**
@@ -14,4 +15,6 @@ namespace my_dsa {
      * @return The greatest common divisor of p and q.
      */
     int euclids_algorithm(int p, int q);
+
+    int binary_search(int key, std::vector<int>& num_list);
 }

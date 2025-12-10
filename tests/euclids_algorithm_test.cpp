@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "my_dsa/euclids_algorithm.h"
+#include "my_dsa.h"
 
 TEST(EuclidsAlgorithm, HandlesPositiveNumbers) {
     EXPECT_EQ(my_dsa::euclids_algorithm(48, 18), 6);
