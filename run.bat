@@ -34,12 +34,11 @@ goto :run_target
     )
     shift
     set "PROGRAM_ARGS="
-
-:collect_args
-    if "%~1"=="" goto :run_app
-    set "PROGRAM_ARGS=%PROGRAM_ARGS% %1"
-    shift
-    goto :collect_args
+    :collect_args
+        if "%~1"=="" goto :run_app
+        set "PROGRAM_ARGS=%PROGRAM_ARGS% %1"
+        shift
+        goto :collect_args
 
 :run_app
     echo Running: %TARGET%%PROGRAM_ARGS%...

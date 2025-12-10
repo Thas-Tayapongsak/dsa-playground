@@ -11,6 +11,11 @@ if /I "%~1"=="-a" set ALL_FLAG=1
 if /I "%~1"=="--all" set ALL_FLAG=1
 if defined ALL_FLAG goto :test_all
 
+set "LIST_FLAG="
+if /I "%~1"=="-l" set LIST_FLAG=1
+if /I "%~1"=="--list" set LIST_FLAG=1
+if defined LIST_FLAG goto :test_list
+
 if "%~1"=="" (
     echo Error: No argument provided.
     goto :help
@@ -36,6 +41,18 @@ goto :test_target
     echo ---------------------------------------------------
     ctest --preset test
     goto :check_error
+
+:test_list
+    shift
+    if "%~1"=="" goto :list_all
+    set "TARGET=%1"
+    goto :list_target
+    :list_all
+        ctest --preset test -N
+        goto :eof
+    :list_target
+        ctest --preset test -N -R %TARGET%
+        goto :eof
 
 :test_target
     echo Testing: %TARGET%...
