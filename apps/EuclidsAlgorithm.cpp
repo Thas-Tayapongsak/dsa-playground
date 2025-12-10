@@ -1,18 +1,20 @@
 #include <iostream>
 #include "my_dsa/euclids_algorithm.h"
 
-using namespace std;
-
 int main(int argc, char* argv[]) {
+    // Validate arguments
     if (argc != 3) {
-        cerr << "Usage: " << argv[0] << " <num1> <num2>" << endl;
+        std::cerr << "Usage: " << argv[0] << " <num1> <num2>" << std::endl;
         return 1;
     }
 
-    int num1 = stoi(argv[1]);
-    int num2 = stoi(argv[2]);
+    // Parse inputs into positive integers
+    int num1 = std::stoi(argv[1]);
+    int num2 = std::stoi(argv[2]);
     
-    int result = my_dsa::euclids_algorithm(num1, num2);
+    int gcd = my_dsa::euclids_algorithm(num1, num2);
     
-    cout << "The greated common divisor of " << num1 << " and " << num2 << " is " << result << endl;
+    std::cout << "The greated common divisor of " << num1 << " and " << num2 << " is " << gcd << std::endl;
+
+    return 0;
 }

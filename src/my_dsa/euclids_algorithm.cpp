@@ -3,7 +3,7 @@
 
 namespace my_dsa {
     int euclids_algorithm(int p, int q) {
-        // Validate and sanitize inputs
+        // Make negative integers positive
         p = std::abs(p);
         q = std::abs(q);
 
