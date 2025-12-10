@@ -9,9 +9,9 @@ cmake --preset default
 
 **Build**
 ```bash
-./buid <filename> [--run|-r] [args...]
+./build <filename> 
+./build [--all|-a]
 ./build EuclidsAlgo
-./build EuclidsAlgo -r 10 15
 ```
 
 **Run**
