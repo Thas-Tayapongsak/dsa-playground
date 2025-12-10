@@ -17,7 +17,7 @@ goto :run_target
 :help
     echo Usage: .\run ^<filename^> [args...]
     echo.
-    echo Runs an executable from the "build" directory.
+    echo Runs an executable from the "build/bin" directory.
     echo.
     echo Parameters:
     echo   ^<filename^>     Name of the app to run (without extension).

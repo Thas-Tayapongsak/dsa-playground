@@ -5,3 +5,13 @@ TEST(EuclidGCD, HandlesPositiveNumbers) {
     EXPECT_EQ(my_dsa::euclid_gcd(48, 18), 6);
     EXPECT_EQ(my_dsa::euclid_gcd(101, 10), 1);
 }
+
+TEST(EuclidGCD, HandlesNegativeNumbers) {
+    EXPECT_EQ(my_dsa::euclid_gcd(-48, -18), 6);
+    EXPECT_EQ(my_dsa::euclid_gcd(-101, -10), 1);
+}
+
+TEST(EuclidGCD, HandlesMixedSignedNumbers) {
+    EXPECT_EQ(my_dsa::euclid_gcd(48, -18), 6);
+    EXPECT_EQ(my_dsa::euclid_gcd(-101, 10), 1);
+}
