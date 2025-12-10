@@ -16,5 +16,17 @@ namespace my_dsa {
      */
     int euclids_algorithm(int p, int q);
 
+    /**
+     * @brief Find the index of the key in the array using binary search algorithm. Return -1 if not found.
+     * 
+     * This function uses the binary search algorithm to determine if a given integer 
+     * is a member of an array or not. It will sort the array, create an array of original indices, 
+     * use binary search algorithm, access the original index, and return the found index.
+     * If the key is not found, it will return -1.
+     * 
+     * @param key The integer to find.
+     * @param num_list The array of integers.
+     * @return The original index if found, or -1 if not found.
+     */
     int binary_search(int key, std::vector<int>& num_list);
 }
