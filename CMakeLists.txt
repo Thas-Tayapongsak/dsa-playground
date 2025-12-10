@@ -24,7 +24,7 @@ target_include_directories(my_libs PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 ################################################################
 # APPLICATIONS
 ################################################################
-file(GLOB APP_SOURCES CONFIGURE_DEPENDS "app/*.cpp")
+file(GLOB APP_SOURCES CONFIGURE_DEPENDS "apps/*.cpp")
 
 foreach(appfile ${APP_SOURCES})
     get_filename_component(appname ${appfile} NAME_WE)

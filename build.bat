@@ -43,8 +43,8 @@ goto :build_target
     goto :check_error
 
 :build_target
-    if not exist "app/%TARGET%.cpp" (
-        echo Error: File "app/%TARGET%.cpp" not found.
+    if not exist "apps/%TARGET%.cpp" (
+        echo Error: File "apps/%TARGET%.cpp" not found.
         exit /b 1
     )
     echo Building: %TARGET%...
