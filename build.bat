@@ -1,46 +1,63 @@
 @echo off
+setlocal 
 
-REM Check for the target file
+if not "%~2"=="" (
+    echo Error: Too many arguments or mixed flags.
+    goto :help
+)
+
+set "HELP_FLAG="
+if /I "%~1"=="-h" set HELP_FLAG=1
+if /I "%~1"=="--help" set HELP_FLAG=1
+if defined HELP_FLAG goto :help
+
+set "ALL_FLAG="
+if /I "%~1"=="-a" set ALL_FLAG=1
+if /I "%~1"=="--all" set ALL_FLAG=1
+if defined ALL_FLAG goto :build_all
+
 if "%~1"=="" (
-    echo Usage: .\build ^<filename^> [-r|--run] [args]
-    exit /b 1
+    echo Error: No argument provided.
+    goto :help
 )
 
-REM Check if target file exists
 set "TARGET=%~1"
-if not exist "src/%TARGET%.cpp" (
-    echo Error: File "src/%TARGET%.cpp" not found.
-    exit /b 1
-)
+goto :build_target
 
-REM Run the CMake Build
-echo Building: %TARGET%...
-cmake --build --preset debug --target "%TARGET%"
+:help
+    echo Usage: .\build [option] ^<filename^>
+    echo.
+    echo Options:
+    echo   -a, --all      Build the entire project (Apps, Libs, Tests).
+    echo   -h, --help     Show this help message.
+    echo.
+    echo Parameters:
+    echo   ^<filename^>     Name of the specific target app to build (e.g., EuclidsAlgo).
+    echo.
+    exit /b 0
 
-REM If build fails, stop here
-if %errorlevel% neq 0 (
-    echo Build failed :^(
-    exit /b %errorlevel%
-)
-echo Build succeeded :D
+:build_all
+    echo Building the entire project...
+    echo ---------------------------------------------------
+    cmake --build --preset debug
+    goto :check_error
 
-REM Run the executable if indicated
-shift
-set "SHOULD_RUN="
-if /I "%~1"=="-r" set SHOULD_RUN=1
-if /I "%~1"=="--run" set SHOULD_RUN=1
-if not defined SHOULD_RUN goto :eof
+:build_target
+    if not exist "app/%TARGET%.cpp" (
+        echo Error: File "app/%TARGET%.cpp" not found.
+        exit /b 1
+    )
+    echo Building: %TARGET%...
+    echo ---------------------------------------------------
+    cmake --build --preset debug --target "%TARGET%"
+    goto :check_error
 
-REM Collect program arguments
-shift
-set "PROGRAM_ARGS="
-:collect_args
-if "%~1"=="" goto :run_program
-set "PROGRAM_ARGS=%PROGRAM_ARGS% %1"
-shift
-goto :collect_args
+:check_error
+    echo.
+    if %errorlevel% neq 0 (
+        echo Build failed :^(
+        exit /b %errorlevel%
+    )
+    echo Build succeeded :D
 
-REM Run the program
-:run_program
-echo -----------------------------------
-call run.bat "%TARGET%" %PROGRAM_ARGS%
+endlocal

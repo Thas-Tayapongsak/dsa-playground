@@ -1,12 +1,7 @@
 #include <iostream>
+#include "euclid_gcd.h"
 
 using namespace std;
-
-int gcd(int p, int q) {
-    if (q == 0) { return p; }
-    int r = p % q;
-    return gcd(q, r);
-}
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -16,7 +11,7 @@ int main(int argc, char* argv[]) {
 
     int num1 = stoi(argv[1]);
     int num2 = stoi(argv[2]);
-    int result = gcd(num1, num2);
+    int result = euclid_gcd(num1, num2);
     
     cout << "The greated common divisor of " << num1 << " and " << num2 << " is " << result << endl;
 }

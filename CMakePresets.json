@@ -23,5 +23,18 @@
       "configurePreset": "default",
       "configuration": "Debug"
     }
+  ],
+  "testPresets": [
+    {
+      "name": "test",
+      "configurePreset": "default",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    }
   ]
 }
