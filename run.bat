@@ -28,8 +28,8 @@ goto :run_target
     exit /b 0
 
 :run_target
-    if not exist "build/%TARGET%.exe" (
-        echo Error: File "build/%TARGET%.exe" not found.
+    if not exist "build/bin/%TARGET%.exe" (
+        echo Error: File "build/bin/%TARGET%.exe" not found.
         exit /b 1
     )
     shift
@@ -44,7 +44,7 @@ goto :run_target
 :run_app
     echo Running: %TARGET%%PROGRAM_ARGS%...
     echo ---------------------------------------------------
-    "build\%TARGET%.exe" %PROGRAM_ARGS%
+    "build\bin\%TARGET%.exe" %PROGRAM_ARGS%
     goto :check_error
 
 :check_error
