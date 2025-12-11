@@ -7,7 +7,7 @@ if /I "%~1"=="--help" set HELP_FLAG=1
 if defined HELP_FLAG goto :help
 
 if "%~1"=="" (
-    echo Error: No argument provided.
+    echo Error: No argument provided. >&2
     goto :help
 )
 
@@ -29,7 +29,7 @@ goto :run_target
 
 :run_target
     if not exist "build/bin/%TARGET%.exe" (
-        echo Error: File "build/bin/%TARGET%.exe" not found.
+        echo Error: File "build/bin/%TARGET%.exe" not found. >&2
         exit /b 1
     )
     shift
@@ -41,17 +41,17 @@ goto :run_target
         goto :collect_args
 
 :run_app
-    echo Running: %TARGET%%PROGRAM_ARGS%...
-    echo ---------------------------------------------------
+    echo Running: %TARGET%%PROGRAM_ARGS%... >&2
+    echo --------------------------------------------------- >&2
     "build\bin\%TARGET%.exe" %PROGRAM_ARGS%
     goto :check_error
 
 :check_error
-    echo.
+    echo. >&2
     if %errorlevel% neq 0 (
-        echo Run failed :^(
+        echo Run failed :^( >&2
         exit /b %errorlevel%
     )
-    echo Run succeeded :D
+    echo Run succeeded :D >&2
 
 endlocal
