@@ -11,7 +11,11 @@ if "%~1"=="" (
     goto :help
 )
 
-set "TARGET=%~1"
+set "BUILD_FLAG="
+if /I "%~1"=="-b" set BUILD_FLAG=1
+if /I "%~1"=="--build" set BUILD_FLAG=1
+if defined BUILD_FLAG goto :build
+
 goto :run_target
 
 :help
@@ -24,10 +28,18 @@ goto :run_target
     echo   [args...]        Arguments to pass to the application.
     echo.
     echo Options:
+    echo   -b, --build    Also build the app
     echo   -h, --help     Show this help message.
     exit /b 0
 
+:build
+    set "TARGET=%~2"
+    call ./build %TARGET%
+    shift
+    :run_target
+
 :run_target
+    set "TARGET=%~1"    
     if not exist "build/bin/%TARGET%.exe" (
         echo Error: File "build/bin/%TARGET%.exe" not found. >&2
         exit /b 1
@@ -47,6 +59,7 @@ goto :run_target
     goto :check_error
 
 :check_error
+    echo. >&2
     echo. >&2
     if %errorlevel% neq 0 (
         echo Run failed :^( >&2

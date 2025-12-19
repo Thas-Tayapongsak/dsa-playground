@@ -70,11 +70,11 @@ goto :build_target
     goto :check_error
 
 :check_error
-    echo.
+    echo. >&2
     if %errorlevel% neq 0 (
-        echo Build failed :^(
+        echo Build failed :^( >&2
         exit /b %errorlevel%
     )
-    echo Build succeeded :D
+    echo Build succeeded :D >&2
 
 endlocal
