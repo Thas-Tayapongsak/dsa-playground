@@ -10,8 +10,7 @@ def run_app():
         if args is None: args = []
 
         default_build_dir = Path(__file__).parent.parent / "build" / "bin"
-        exe_dir = os.environ.get('EXECUTABLE_DIR', default_build_dir
-                                 )
+        exe_dir = os.environ.get('EXECUTABLE_DIR', default_build_dir)
         app_path = Path(exe_dir) / f"{app_name}.exe"
 
         if not app_path.exists():
