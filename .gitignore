@@ -54,6 +54,7 @@ _deps
 CMakeUserPresets.json
 
 build/
+integration_tests/temp/
 
 # for integration test
 .venv/

@@ -1,5 +1,6 @@
 import pytest
 import os
+import shutil
 from pathlib import Path
 
 @pytest.fixture
@@ -25,3 +26,18 @@ def run_app():
                 return subprocess.run(cmd, stdin=f, capture_output=True, text=True)
     
     return _run
+
+@pytest.fixture
+def temp_path():
+    """
+    Clear the `temp` directory of the temporary files
+    """
+    root_dir = Path(__file__).parent
+    temp_dir = root_dir / "temp"
+
+    if temp_dir.exists():
+        shutil.rmtree(temp_dir)
+
+    temp_dir.mkdir()
+
+    return temp_dir

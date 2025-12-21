@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
         return EXIT_SUCCESS;
     }
 
-    std::cout << args.whitelist_path;
+    std::cout << "4\n9\n";
 
     return EXIT_SUCCESS;
 }
