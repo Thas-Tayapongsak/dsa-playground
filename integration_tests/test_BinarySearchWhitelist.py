@@ -30,7 +30,7 @@ def test_filter(run_app, temp_path):
         `temp/fulllist.txt` containing [4,3,9,7]
 
     Output:
-        [4, 9]
+        [4,9]
 
     Returns:
         0
@@ -43,41 +43,116 @@ def test_filter(run_app, temp_path):
     assert result.returncode == 0
     assert result.stdout.strip().splitlines() == ["4","9"]
 
-# def test_empty_whitelist(run_app, temp_path):
-#     """
-#     Scenario: The whitelist is empty.
+def test_empty_whitelist(run_app, temp_path):
+    """
+    Scenario: The whitelist is empty
+    
+    Given:
+        `temp/whitelist.txt` containing []
+        `temp/fulllist.txt` containing [1,2,3]
 
-#     Given:
-#         `temp/whitelist.txt` containing []
-#         `temp/fulllist.txt` containing [1,2,3]
+    Output:
+        [1,2,3]
 
-#     Output:
-#         [1,2,3]
+    Returns:
+        0
+    """
+    whitelist = create_file(temp_path, "whitelist.txt", "")
+    fulllist = create_file(temp_path, "fulllist.txt", "1\n2\n3\n")
 
-#     Returns:
-#         0
-#     """
-#     pass
+    result = run_app(APP_NAME, args=[whitelist], input_path=fulllist)
+
+    assert result.returncode == 0
+    assert result.stdout.strip().splitlines() == ["1","2","3"]
+
+def test_empty_stdin(run_app, temp_path):
+    """
+    Scenario: The list to be filtered is empty
+    
+    Given:
+        `temp/whitelist.txt` containing [456,123]
+        `temp/fulllist.txt` containing []
+
+    Output:
+        []
+
+    Returns:
+        0
+    """
+    whitelist = create_file(temp_path, "whitelist.txt", "456\n123\n")
+    fulllist = create_file(temp_path, "fulllist.txt", "")
+
+    result = run_app(APP_NAME, args=[whitelist], input_path=fulllist)
+
+    assert result.returncode == 0
+    assert result.stdout.strip().splitlines() == []
+
+
+def test_filter_all_items(run_app, temp_path):
+    """
+    Scenario: Filter all items for lists with the same integers
+    
+    Given:
+        `temp/whitelist.txt` containing [1,5,13,9]
+        `temp/fulllist.txt` containing [9,13,1,5]
+
+    Output:
+        []
+
+    Returns:
+        0
+    """
+    whitelist = create_file(temp_path, "whitelist.txt", "1\n5\n13\n9\n")
+    fulllist = create_file(temp_path, "fulllist.txt", "9\n13\n1\n5")
+
+    result = run_app(APP_NAME, args=[whitelist], input_path=fulllist)
+
+    assert result.returncode == 0
+    assert result.stdout.strip().splitlines() == []
+
+def test_filter_preserve_duplicates(run_app, temp_path):
+    """
+    Scenario: Filtered integers include duplicate integers
+
+    Given:
+        `temp/whitelist.txt` containing [41,42,43]
+        `temp/fulllist.txt` containing [41,42,44,45,44]
+
+    Output:
+        [44,45,44]
+
+    Returns:
+        0
+    """
+    whitelist = create_file(temp_path, "whitelist.txt", "41\n42\n43\n")
+    fulllist = create_file(temp_path, "fulllist.txt", "41\n42\n44\n45\n44")
+
+    result = run_app(APP_NAME, args=[whitelist], input_path=fulllist)
+
+    assert result.returncode == 0
+    assert result.stdout.strip().splitlines() == ["44","45","44"]
+
+def test_help(run_app):
+    """
+    Scenario: Using the help flag to display usage information
+
+    Output:
+        A usage message for the application
+    
+    Returns:
+        0
+    """
+    result = run_app(APP_NAME, args=["-h"])
+
+    assert result.returncode == 0
+
+    help_message = result.stderr.strip()
+
+    assert "Usage:" in help_message
+    assert "-h, --help" in help_message
+    assert "Display the help message" in help_message
 
 """
-test_filter 
-    - given a whitelist and a list, output the correct newline-delimited integers.
-
-test_empty_whitelist 
-    - given an empty whitelist and a list, output the original list in the original order.
-
-test_empty_stdin 
-    - given a whitelist and no input, output nothing.
-
-test_filter_all_items 
-    - given an identical pair of whitelist and input list, output nothing.
-
-test_filter_preserve_duplicates 
-    - given a whitelist and a list with duplicates, output the filtered integers including duplicates.
-
-test_help 
-    - running with help flag, output the usage and success status
-
 test_missing_whitelist 
     - given no whitelist, output the usage and error status
 
