@@ -136,6 +136,9 @@ def test_help(run_app):
     """
     Scenario: Using the help flag to display usage information
 
+    Given:
+        `-h` flag
+
     Output:
         A usage message for the application
     
@@ -152,10 +155,31 @@ def test_help(run_app):
     assert "-h, --help" in help_message
     assert "Display the help message" in help_message
 
-"""
-test_missing_whitelist 
-    - given no whitelist, output the usage and error status
 
+def test_missing_whitelist(run_app, temp_path):
+    """
+    Scenario: No argument given
+
+    Given:
+        'temp/fulllist.txt' containing [1,2,3]
+
+    Output:
+        Error message
+
+    Returns:
+        1
+    """
+    fulllist = create_file(temp_path, "fulllist.txt", "1\n2\n3\n")
+
+    result = run_app(APP_NAME, input_path=fulllist)
+
+    assert result.returncode == 1
+
+    error_message = result.stderr.strip()
+
+    assert "Error: Missing argument for path to whitelist file." in error_message
+
+"""
 test_nonexistent_whitelist 
     - given a path to a nonexistent whitelist, output error message
 """
