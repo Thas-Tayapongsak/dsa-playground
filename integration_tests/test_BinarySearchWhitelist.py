@@ -161,7 +161,7 @@ def test_missing_whitelist(run_app, temp_path):
     Scenario: No argument given
 
     Given:
-        'temp/fulllist.txt' containing [1,2,3]
+        `temp/fulllist.txt` containing [1,2,3]
 
     Output:
         Error message
@@ -172,16 +172,33 @@ def test_missing_whitelist(run_app, temp_path):
     fulllist = create_file(temp_path, "fulllist.txt", "1\n2\n3\n")
 
     result = run_app(APP_NAME, input_path=fulllist)
-
-    assert result.returncode == 1
-
     error_message = result.stderr.strip()
 
+    assert result.returncode == 1
     assert "Error: Missing argument for path to whitelist file." in error_message
 
-"""
-test_nonexistent_whitelist 
-    - given a path to a nonexistent whitelist, output error message
-"""
+def test_nonexistent_whitelist(run_app, temp_path):
+    """
+    Scenario: Whitelist file does not exist
+
+    Given:
+        `temp/no_whitelist.txt` that does not exist
+        `temp/fulllist.txt` containing [1,2,3]
+
+    Output:
+        Error message
+
+    Returns:
+        1
+    """
+    whitelist = str(temp_path / "no_whitelist.txt")
+    fulllist = create_file(temp_path, "fulllist.txt", "1\n2\n3\n")
+
+    result = run_app(APP_NAME, args=[whitelist], input_path=fulllist)
+    error_message = result.stderr.strip()
+    
+    assert result.returncode == 1
+    assert "Error: Whitelist file does not exist." in error_message
+
 
 
